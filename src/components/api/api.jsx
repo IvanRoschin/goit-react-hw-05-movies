@@ -1,0 +1,40 @@
+import axios from 'axios';
+
+import API_KEY from './constants/apiKeys';
+import { BASE_TRENDING_MOVIES_URL } from './constants/baseUrls';
+
+axios.defaults.baseURL = BASE_TRENDING_MOVIES_URL;
+
+// FETCH FILMS FOR THE FIRST TIME
+export const getTrending = async (page = 1) => {
+  const { data } = await axios.get(
+    `/trending/movie/day?api_key=${API_KEY}&page=${page}`
+  );
+  return data;
+};
+
+// FETCH FILMS BY ID
+export const getFilmById = async id => {
+  const { data } = await axios.get(`/movie/${id}?api_key=${API_KEY}`);
+  return data;
+};
+
+// FETCH FILMS USING FORM
+export const getSearchMovie = async (query, page) => {
+  const { data } = await axios.get(
+    `/search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=${page}`
+  );
+  return data;
+};
+
+// FETCH CAST
+export const getMovieCast = async id => {
+  const { data } = await axios.get(`/movie/${id}/credits?api_key=${API_KEY}`);
+  return data;
+};
+
+// FETCH REVIEWS
+export const getMovieReviews = async id => {
+  const { data } = await axios.get(`/movie/${id}/reviews?api_key=${API_KEY}`);
+  return data;
+};
