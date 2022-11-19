@@ -1,76 +1,107 @@
 import { Outlet, useParams } from 'react-router-dom';
-import { NavItem } from './MovieDetails.styled';
-import { useState, useEffect } from 'react';
-import { getFilms } from 'fakeApi';
+import {
+  NavItem,
+  Container,
+  FilmContainer,
+  DetailsContainer,
+  FilmTitle,
+  VoteAverage,
+  BlockTitle,
+  Overview,
+  GenreList,
+  AditionalInfoContainer,
+} from './MovieDetails.styled';
+import { useState, useEffect, Suspense } from 'react';
+import { getFilmById } from '../../components/api/api';
+import { BASE_POSTER_URL, IMG_W300 } from 'components/api/constants/baseUrls';
 
 const navItems = [
-  { href: 'movies/:movieId/cast', text: 'Cast' },
-  { href: 'movies/:movieId/reviews', text: 'Reviews' },
+  { href: 'cast', text: 'Cast' },
+  { href: 'reviews', text: 'Reviews' },
 ];
+
+const Status = {
+  IDLE: 'idle',
+  PENDING: 'pending',
+  RESOLVED: 'resolved',
+  REJECTED: 'rejected',
+};
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [filmDetails, setFilmDetails] = useState({});
-  // const [filmGenre, setFilmGenre] = useState([]);
-  const { name, title, poster_path } = filmDetails;
+  const [status, setStatus] = useState(Status.IDLE);
+  const [filmGenre, setFilmGenre] = useState([]);
+  const { poster_path, name, title, vote_average, overview, release_date } =
+    filmDetails;
+  const releaseYear = new Date(release_date).getFullYear();
+
+  // const vote = voteAverageRound(vote_average);
 
   useEffect(() => {
-    getFilms(movieId).then(setFilmDetails);
+    if (!movieId) return;
+
+    async function setMovieById() {
+      setStatus(Status.PENDING);
+
+      try {
+        const res = await getFilmById(movieId);
+        setFilmDetails(res);
+        setFilmGenre(res.genres);
+        setStatus(Status.RESOLVED);
+      } catch (error) {
+        setStatus(Status.REJECTED);
+        console.log(error);
+      }
+    }
+    setMovieById();
   }, [movieId]);
 
-  console.log(name);
+  let imagePath = ``;
+  !poster_path
+    ? (imagePath = `https://raw.githubusercontent.com/marvall/filmoteka/main/src/images/no-poster.png`)
+    : (imagePath = `${BASE_POSTER_URL}/${IMG_W300}/${poster_path}`);
 
   return (
-    <>
-      <div>MovieDetails must been here</div>
-      <div>
-        <div>{name || title}</div>
-        <div>{poster_path}</div>
-      </div>
+    <Container>
+      {/* <GoBackLink to={location.state.from ?? '/'}>Go back</GoBackLink> */}
 
-      <nav>
+      <FilmContainer>
+        <div>
+          <img src={imagePath} alt={title || name} loading="lazy" />
+        </div>
+        <DetailsContainer>
+          <FilmTitle>
+            {title} ({releaseYear})
+          </FilmTitle>
+          <VoteAverage>
+            <span>Average:</span> {vote_average}
+          </VoteAverage>
+          <BlockTitle>Overview</BlockTitle>
+          <Overview>{overview}</Overview>
+          <BlockTitle>Genres</BlockTitle>
+          {
+            <GenreList>
+              {filmGenre.map(({ name }) => {
+                return <li key={name}>{name}</li>;
+              })}
+            </GenreList>
+          }
+        </DetailsContainer>
+      </FilmContainer>
+      <BlockTitle>Aditional information</BlockTitle>
+      <AditionalInfoContainer>
         {navItems.map(({ href, text }) => (
           <NavItem to={href} key={href}>
             {text}
           </NavItem>
         ))}
-      </nav>
-      <Outlet />
-    </>
+      </AditionalInfoContainer>
+      <Suspense fallback={<div>Loading page...</div>}>
+        <Outlet context={movieId} />
+      </Suspense>
+    </Container>
   );
 };
 
 export default MovieDetails;
-
-// import { useState, useEffect } from 'react';
-// import { getFilmById } from '../../components/api/api';
-// import { Navlink, Outlet } from 'react-router-dom';
-
-// const navItems = [{href: }];
-
-// const MovieDetails = () => {
-//   const [filmDetails, setFilmDetail] = useState([]);
-//   const [filmGenres, setFilmGenres] = useState([]);
-//   const { poster_path, title, vote_average, overview, release_date } = filmInfo;
-//   const releaseYear = new Date(release_date).getFullYear();
-
-//   useEffect(() => {
-//     async function getFilms() {
-//       try {
-//         const filmDetails = await getFilmById(id);
-//         setFilmDetail(prevState => [...prevState, ...filmDetails]);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     }
-//     getFilms();
-//   }, [id]);
-//   console.log('filmDetails', filmDetails);
-//   return (
-//     <>
-//       <div>Films Detail must been here</div>
-//     </>
-//   );
-// };
-
-// export default MovieDetails;

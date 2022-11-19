@@ -6,17 +6,10 @@ export const SearchbarHeader = styled.header`
   position: sticky;
   z-index: 1100;
   display: flex;
-  justify-content: center;
   align-items: center;
   min-height: ${p => p.theme.space[6]}px;
-  padding-right: ${p => p.theme.space[4]}px;
-  padding-left: ${p => p.theme.space[4]}px;
-  padding-top: ${p => p.theme.space[2]}px;
   padding-bottom: ${p => p.theme.space[2]}px;
   color: ${p => p.theme.colors.white};
-  background-color: ${p => p.theme.colors.accent};
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;
 
 export const SearchForm = styled.form`

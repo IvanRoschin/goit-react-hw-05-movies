@@ -48,7 +48,7 @@ export default function Searchbar({ onSubmit }) {
           value={request}
           autoComplete="off"
           autoFocus
-          placeholder="Search images and photos"
+          placeholder="Search movies"
           onChange={handleChange}
         />
       </SearchForm>

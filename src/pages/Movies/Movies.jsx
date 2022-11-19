@@ -25,11 +25,11 @@ const Movies = () => {
 
     async function getFilms() {
       setStatus(Status.PENDING);
-      setNotify`Sorry, but where are no images for your request ${request}`;
+      setNotify`Sorry, but where are no movies for your request ${request}`;
 
       try {
-        getSearchMovie().then(r => setFilms(r.results));
-        setNotify(`Here is your ${request}s`);
+        getSearchMovie(request).then(r => setFilms(r.results));
+        setNotify(`Here's your ${request}`);
         setStatus(Status.RESOLVED);
       } catch (error) {
         setStatus(Status.REJECTED);
@@ -37,6 +37,12 @@ const Movies = () => {
     }
     getFilms();
   }, [request]);
+
+  // useEffect(() => {
+  //   if (request && films.length) {
+  //     setNotify('Sorry, nothing was found, please try your search again');
+  //   }
+  // }, [request, films.length]);
 
   const handleFormSubmit = request => {
     setRequest(request);
@@ -47,7 +53,13 @@ const Movies = () => {
     <>
       <Searchbar onSubmit={handleFormSubmit} />
       <Message message={notify} status={status} />
-      <FilmGallery films={films} />
+      {status === Status.PENDING}
+      {status === Status.RESOLVED && films.length > 0 && (
+        <FilmGallery films={films} />
+      )}
+      {status === Status.REJECTED && films.length === 0 && (
+        <Message message={notify} />
+      )}
     </>
   );
 };
