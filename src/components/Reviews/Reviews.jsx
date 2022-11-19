@@ -14,7 +14,7 @@ const Reviews = () => {
     }
     try {
       getMovieReviews(movieId).then(r => {
-        setReviews(r.reviews);
+        setReviews(r.results);
       });
     } catch (error) {
       console.log(error);
