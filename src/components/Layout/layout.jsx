@@ -1,21 +1,27 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Header, Link } from './layout.styled';
+import { Header, NavItem } from './layout.styled';
+
+const navItems = [
+  { href: '/', text: 'Home' },
+  { href: 'movies', text: 'Movies' },
+];
 
 export const Layout = () => {
   return (
-    <div>
+    <>
       <Header>
         <nav>
-          <Link to="/" end>
-            Home
-          </Link>
-          <Link to="movies">Movies</Link>
+          {navItems.map(({ href, text }) => (
+            <NavItem to={href} key={href}>
+              {text}
+            </NavItem>
+          ))}
         </nav>
       </Header>
       <Suspense fallback={<div>Loading page...</div>}>
         <Outlet />
       </Suspense>
-    </div>
+    </>
   );
 };

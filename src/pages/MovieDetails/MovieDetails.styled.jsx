@@ -1,20 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-export const Header = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px 0;
-  margin-bottom: 16px;
-  box-shadow: 0px 15px 10px -15px rgba(0, 0, 0, 0.45);
-
-  > nav {
-    display: flex;
-  }
-`;
-
 export const NavItem = styled(NavLink)`
   font-family: ${p => p.theme.fonts.body};
   font-size: ${p => p.theme.fontSizes.ml};

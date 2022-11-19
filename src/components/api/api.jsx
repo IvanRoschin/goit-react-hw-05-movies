@@ -7,10 +7,10 @@ axios.defaults.baseURL = BASE_TRENDING_MOVIES_URL;
 
 // FETCH FILMS FOR THE FIRST TIME
 export const getTrending = async (page = 1) => {
-  const { data } = await axios.get(
+  const response = await axios.get(
     `/trending/movie/day?api_key=${API_KEY}&page=${page}`
   );
-  return data;
+  return response.data;
 };
 
 // FETCH FILMS BY ID
@@ -20,9 +20,9 @@ export const getFilmById = async id => {
 };
 
 // FETCH FILMS USING FORM
-export const getSearchMovie = async (query, page) => {
+export const getSearchMovie = async query => {
   const { data } = await axios.get(
-    `/search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=${page}`
+    `/search/movie?api_key=${API_KEY}&language=en-US&query=${query}`
   );
   return data;
 };

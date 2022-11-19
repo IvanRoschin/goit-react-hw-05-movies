@@ -1,49 +1,53 @@
-import { FilmGallery } from '../../components/FilmGallery/FilmGallery';
-import { getSearchMovie } from '../../components/api/api';
 import { useState, useEffect } from 'react';
+import { getSearchMovie } from '../../components/api/api';
 import Searchbar from 'components/Searchbar';
+import { FilmGallery } from '../../components/FilmGallery/FilmGallery';
+import Message from 'components/Message';
+
+const Status = {
+  IDLE: 'idle',
+  PENDING: 'pending',
+  RESOLVED: 'resolved',
+  REJECTED: 'rejected',
+};
 
 const Movies = () => {
-  // const [trendingFilms, SetTrendingFilms] = useState([]);
-  const [searchingFilms, setSearchingFilms] = useState([]);
-  const [page, setPage] = useState(1);
+  const [films, setFilms] = useState([]);
   const [request, setRequest] = useState('');
-
-  // useEffect(() => {
-  //   try {
-  //     getTrending().then(r => SetTrendingFilms(r.results));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
+  const [notify, setNotify] = useState('');
+  const [status, setStatus] = useState(Status.IDLE);
 
   useEffect(() => {
     if (!request) {
+      setNotify('To display films, enter a query in the search field');
       return;
     }
+
     async function getFilms() {
+      setStatus(Status.PENDING);
+      setNotify`Sorry, but where are no images for your request ${request}`;
+
       try {
-        const searchingFilms = await getSearchMovie(request, page);
-        setSearchingFilms(prevState => [...prevState, ...searchingFilms]);
+        getSearchMovie().then(r => setFilms(r.results));
+        setNotify(`Here is your ${request}s`);
+        setStatus(Status.RESOLVED);
       } catch (error) {
-        console.log(error);
+        setStatus(Status.REJECTED);
       }
     }
     getFilms();
-  }, [request, page]);
+  }, [request]);
 
   const handleFormSubmit = request => {
     setRequest(request);
-    setSearchingFilms([]);
-    setPage(1);
+    setFilms([]);
   };
-  console.log('searchingFilms', searchingFilms);
+
   return (
     <>
       <Searchbar onSubmit={handleFormSubmit} />
-      <div>Films Gallery must been here</div>
-      {/* <FilmGallery trendingFilms={trendingFilms}></FilmGallery> */}
-      <FilmGallery searchingFilms={searchingFilms}></FilmGallery>
+      <Message message={notify} status={status} />
+      <FilmGallery films={films} />
     </>
   );
 };

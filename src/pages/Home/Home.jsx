@@ -1,16 +1,15 @@
 import { getTrending } from '../../components/api/api';
-import { FilmList } from '../../components/FilmsList/FilmsList';
+// import { FilmList } from '../../components/FilmsList/FilmsList';
+import { FilmGallery } from '../../components/FilmGallery/FilmGallery';
 import { useState, useEffect } from 'react';
 import { Title } from './Home.styled';
 
-console.log('Home getTrending', getTrending());
-
 const Home = () => {
-  const [trendingFilms, SetTrendingFilms] = useState([]);
+  const [films, SetFilms] = useState([]);
 
   useEffect(() => {
     try {
-      getTrending().then(r => SetTrendingFilms(r.results));
+      getTrending().then(r => SetFilms(r.results));
     } catch (error) {
       console.log(error);
     }
@@ -19,7 +18,9 @@ const Home = () => {
   return (
     <>
       <Title>Trending today</Title>
-      <FilmList trendingFilms={trendingFilms}> </FilmList>
+      <FilmGallery films={films} />
+
+      {/* <FilmList trendingFilms={trendingFilms}> </FilmList> */}
     </>
   );
 };

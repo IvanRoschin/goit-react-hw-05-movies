@@ -11,8 +11,6 @@ import {
   SearchFormlabel,
 } from './Searchbar.stylized';
 
-// import { Box } from 'components/Box/Box';
-
 export default function Searchbar({ onSubmit }) {
   const [request, setRequest] = useState('');
 
@@ -37,7 +35,6 @@ export default function Searchbar({ onSubmit }) {
     onSubmit(request);
     setRequest('');
   };
-
   return (
     <SearchbarHeader onSubmit={handleSubmit}>
       <SearchForm>
