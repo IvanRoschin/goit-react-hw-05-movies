@@ -23,7 +23,7 @@ export const FilmTitle = styled.h2`
 `;
 
 export const VoteAverage = styled.p`
-  color: orangered;
+  color: ${p => p.theme.colors.red};
   font-weight: 700;
   margin-bottom: ${p => p.theme.space[5]}px; ;
 `;
@@ -77,8 +77,9 @@ export const NavItem = styled(NavLink)`
 `;
 
 export const GoBackLink = styled(Link)`
+  padding: 6px;
   color: black;
   &:hover {
-    color: orangered;
+    color: ${p => p.theme.colors.red};
   }
 `;

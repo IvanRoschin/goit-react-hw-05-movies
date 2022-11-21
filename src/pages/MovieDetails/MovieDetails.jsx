@@ -20,7 +20,7 @@ import {
   setReleaseVote,
 } from '../../components/Services/Round';
 import { BASE_POSTER_URL, IMG_W300 } from 'components/api/constants/baseUrls';
-
+import { GiReturnArrow } from 'react-icons/gi';
 const navItems = [
   { href: 'cast', text: 'Cast' },
   { href: 'reviews', text: 'Reviews' },
@@ -34,6 +34,7 @@ const MovieDetails = () => {
   const { poster_path, name, title, vote_average, overview, release_date } =
     filmDetails;
   const location = useLocation();
+  const backLinkHref = location?.state?.from ?? '/movies';
 
   useEffect(() => {
     if (!movieId) return;
@@ -64,7 +65,10 @@ const MovieDetails = () => {
       {status === 'pending'}
       {status === 'resolved' && (
         <Container>
-          <GoBackLink to={location.state.from ?? '/'}>Go back</GoBackLink>
+          <GoBackLink to={backLinkHref}>
+            <GiReturnArrow size={10} />
+            <span>Go back</span>
+          </GoBackLink>
           <FilmContainer>
             <div>
               <img src={imagePath} alt={title || name} loading="lazy" />
@@ -74,7 +78,7 @@ const MovieDetails = () => {
                 {title} ( {setReleaseDate(release_date) || `date not found`})
               </FilmTitle>
               <VoteAverage>
-                <span>Average:</span>{' '}
+                <span>Average:</span>
                 {setReleaseVote(vote_average) || `vote not found`}
               </VoteAverage>
               <BlockTitle>Overview</BlockTitle>
