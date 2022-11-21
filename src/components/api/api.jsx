@@ -20,9 +20,9 @@ export const getFilmById = async id => {
 };
 
 // FETCH FILMS USING FORM
-export const getSearchMovie = async query => {
+export const getSearchMovie = async (query, page) => {
   const { data } = await axios.get(
-    `/search/movie?api_key=${API_KEY}&language=en-US&query=${query}`
+    `/search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=${page}`
   );
   if (data.total_results === 0) {
     return Promise.reject(new Error(`Ooops! No images with ${query}`));
@@ -33,12 +33,20 @@ export const getSearchMovie = async query => {
 
 // FETCH CAST
 export const getMovieCast = async id => {
-  const { data } = await axios.get(`/movie/${id}/credits?api_key=${API_KEY}`);
-  return data;
+  const response = await axios.get(`/movie/${id}/credits?api_key=${API_KEY}`);
+  if (response.data.cast.length === 0) {
+    return Promise.reject(new Error(`No cast was found.`));
+  } else {
+    return response.data.cast;
+  }
 };
 
 // FETCH REVIEWS
 export const getMovieReviews = async id => {
-  const { data } = await axios.get(`/movie/${id}/reviews?api_key=${API_KEY}`);
-  return data;
+  const response = await axios.get(`/movie/${id}/reviews?api_key=${API_KEY}`);
+  if (response.data.total_results === 0) {
+    return Promise.reject(new Error(`No reviews was found.`));
+  } else {
+    return response.data.results;
+  }
 };

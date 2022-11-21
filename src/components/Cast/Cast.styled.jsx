@@ -5,15 +5,20 @@ export const CastContainer = styled.ul`
   margin-bottom: 16px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 30px;
   justify-content: center;
   list-style: none;
+`;
+
+export const CastItem = styled.li`
+  margin-bottom: 16px;
 `;
 
 export const CastPoster = styled.img`
   box-shadow: 0px 3px 4px 1px rgba(44, 133, 200, 0.2);
   max-width: 200px;
   height: 300px;
+  margin-bottom: 6px;
 `;
 
 export const CastName = styled.p`

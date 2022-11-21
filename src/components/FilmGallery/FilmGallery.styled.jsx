@@ -30,4 +30,6 @@ export const FilmTitle = styled.h2`
   font-size: 16px;
   font-weight: 700;
   max-width: 300px;
+  text-align: center;
+  color: ${p => p.theme.colors.black}; ;
 `;

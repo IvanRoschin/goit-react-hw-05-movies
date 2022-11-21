@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export const Container = styled.div`
   margin-top: 16px;
@@ -73,5 +73,12 @@ export const NavItem = styled(NavLink)`
   :hover:not(.active),
   focus-visible:not(.active) {
     color: ${p => p.theme.colors.red};
+  }
+`;
+
+export const GoBackLink = styled(Link)`
+  color: black;
+  &:hover {
+    color: orangered;
   }
 `;

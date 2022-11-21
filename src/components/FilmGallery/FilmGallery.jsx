@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { BASE_POSTER_URL } from 'components/api/constants/baseUrls';
 import { IMG_W500 } from 'components/api/constants/baseUrls';
 import { Link } from 'react-router-dom';
@@ -9,10 +9,7 @@ import {
   FilmTitle,
 } from './FilmGallery.styled';
 
-// export const BASE_POSTER_URL = `https://image.tmdb.org/t/p/w500`;
-
-export const FilmGallery = ({ films }) => {
-  console.log(films);
+export const FilmGallery = ({ films, location }) => {
   return (
     <FilmContainer>
       {films.map(({ id, title, name, poster_path }) => {
@@ -22,7 +19,7 @@ export const FilmGallery = ({ films }) => {
           : (imagePath = `${BASE_POSTER_URL}/${IMG_W500}/${poster_path}`);
         return (
           <FilmLi key={id}>
-            <Link to={`/movies/${id}`}>
+            <Link to={`/movies/${id}`} state={{ from: location }}>
               <FilmPoster
                 data-id={id}
                 src={imagePath}
@@ -38,6 +35,7 @@ export const FilmGallery = ({ films }) => {
   );
 };
 
-// FilmGallery.propTypes = {
-//   films: PropTypes.array.isRequired,
-// };
+FilmGallery.propTypes = {
+  films: PropTypes.array.isRequired,
+  location: PropTypes.string,
+};
