@@ -20,6 +20,8 @@ export const SearchForm = styled.form`
   background-color: ${p => p.theme.colors.white};
   border-radius: ${p => p.theme.radii.mini};
   overflow: hidden;
+  border: 1px solid;
+  border-color: ${p => p.theme.colors.silver}; ;
 `;
 
 export const SearchFormButton = styled.button`

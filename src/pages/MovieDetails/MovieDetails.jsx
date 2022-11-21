@@ -11,6 +11,7 @@ import {
   GenreList,
   AditionalInfoContainer,
   GoBackLink,
+  GoBackText,
 } from './MovieDetails.styled';
 import { useState, useEffect, Suspense } from 'react';
 import { getFilmById } from '../../components/api/api';
@@ -67,7 +68,7 @@ const MovieDetails = () => {
         <Container>
           <GoBackLink to={backLinkHref}>
             <GiReturnArrow size={10} />
-            <span>Go back</span>
+            <GoBackText>Go back</GoBackText>
           </GoBackLink>
           <FilmContainer>
             <div>

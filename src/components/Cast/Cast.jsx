@@ -32,7 +32,7 @@ const Cast = () => {
       }
     }
     getCast();
-  }, [movieId]);
+  }, [movieId, cast.length]);
 
   return (
     <>

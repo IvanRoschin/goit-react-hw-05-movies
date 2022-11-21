@@ -77,9 +77,14 @@ export const NavItem = styled(NavLink)`
 `;
 
 export const GoBackLink = styled(Link)`
-  padding: 6px;
-  color: black;
+  padding: ${p => p.theme.space[2]}px;
+  color: ${p => p.theme.colors.black};
   &:hover {
     color: ${p => p.theme.colors.red};
   }
+`;
+
+export const GoBackText = styled.span`
+  padding: ${p => p.theme.space[3]}px;
+  font-weight: ${p => p.theme.fontWeights.bold};
 `;
