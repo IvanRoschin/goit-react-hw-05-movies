@@ -2,34 +2,33 @@ import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom';
 
 export const Container = styled.div`
-  margin-top: 16px;
-  margin-left: 16px;
+  margin-top: ${p => p.theme.space[5]}px;
+  margin-left: ${p => p.theme.space[5]}px;
 `;
 
 export const FilmContainer = styled.div`
-  margin-top: 16px;
+  margin-top: ${p => p.theme.space[5]}px;
   display: flex;
-  gap: 16px;
+  gap: ${p => p.theme.space[5]}px;
 `;
 
 export const DetailsContainer = styled.div`
-  margin-top: 32px;
+  margin-top: ${p => p.theme.space[6]}px; ;
 `;
 
 export const FilmTitle = styled.h2`
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 32px;
+  font-size: ${p => p.theme.fontSizes.lm};
+  font-weight: ${p => p.theme.fontWeights.bold};
+  margin-bottom: ${p => p.theme.space[6]}px; ;
 `;
 
 export const VoteAverage = styled.p`
-  color: ${p => p.theme.colors.red};
-  font-weight: 700;
-  margin-bottom: ${p => p.theme.space[5]}px; ;
+  font-weight: ${p => p.theme.fontWeights.bold};
+  margin-bottom: ${p => p.theme.space[6]}px;
 `;
 
 export const BlockTitle = styled.h3`
-  font-weight: 700;
+  font-weight: ${p => p.theme.fontWeights.bold};
   margin-bottom: ${p => p.theme.space[3]}px;
 `;
 

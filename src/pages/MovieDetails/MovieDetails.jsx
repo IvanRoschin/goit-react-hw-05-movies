@@ -79,7 +79,7 @@ const MovieDetails = () => {
                 {title} ( {setReleaseDate(release_date) || `date not found`})
               </FilmTitle>
               <VoteAverage>
-                <span>Average:</span>
+                <span>User Score:</span>
                 {setReleaseVote(vote_average) || `vote not found`}
               </VoteAverage>
               <BlockTitle>Overview</BlockTitle>
