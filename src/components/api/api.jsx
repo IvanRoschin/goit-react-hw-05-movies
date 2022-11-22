@@ -20,9 +20,9 @@ export const getFilmById = async id => {
 };
 
 // FETCH FILMS USING FORM
-export const getSearchMovie = async (query, page) => {
+export const getSearchMovie = async query => {
   const { data } = await axios.get(
-    `/search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=${page}`
+    `/search/movie?api_key=${API_KEY}&language=en-US&query=${query}`
   );
   if (data.total_results === 0) {
     return Promise.reject(new Error(`Ooops! No images with ${query}`));

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { getSearchMovie } from '../../components/api/api';
 import Searchbar from 'components/Searchbar';
 import { FilmGallery } from '../../components/FilmGallery/FilmGallery';
@@ -7,9 +7,11 @@ import Message from 'components/Message';
 import { Status } from '../../components/api/constants/status';
 
 const Movies = () => {
-  const [page, setPage] = useState(0);
   const [films, setFilms] = useState([]);
-  const [request, setRequest] = useState('');
+  // const [request, setRequest] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const request = searchParams.get('query') ?? '';
+
   const [notify, setNotify] = useState('');
   const location = useLocation();
   const [status, setStatus] = useState(Status.IDLE);
@@ -26,11 +28,7 @@ const Movies = () => {
       setNotify`Sorry, but where are no movies for your request ${request}`;
 
       try {
-        if (page === 0) {
-          setPage(1);
-          return;
-        }
-        const movies = await getSearchMovie(request, page);
+        const movies = await getSearchMovie(request);
         setFilms(prevState => [...prevState, ...movies.results]);
         setNotify(`Here's your ${request}s`);
         setStatus(Status.RESOLVED);
@@ -39,16 +37,12 @@ const Movies = () => {
       }
     }
     getFilms();
-  }, [request, page]);
+  }, [request]);
 
-  useEffect(() => {
-    if (request && !films.length) {
-      setNotify('Sorry, nothing was found, please try your search again');
-    }
-  }, [request, films.length]);
+  const handleFormSubmit = value => {
+    setSearchParams(value !== '' ? { query: value } : {});
 
-  const handleFormSubmit = request => {
-    setRequest(request);
+    // setRequest(request);
     setFilms([]);
   };
 
